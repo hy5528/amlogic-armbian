@@ -9,11 +9,11 @@ apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 # 安装 squeezelite
 sudo apt-get install squeezelite -y
 # 安装常用镜像
-sudo mkdir -p /home/docker
+sudo mkdir /home/docker
 sudo chmod -R 777 /home/docker
-sudo mkdir -p /www 
-sudo mkdir -p /www/mysql
-sudo mkdir -p /www/cms && cd /www/cms
+sudo mkdir /www 
+sudo mkdir /www/mysql
+sudo mkdir /www/cms && cd /www/cms
 wget https://gh.con.sh/https://raw.githubusercontent.com/magicblack/maccms_down/master/maccms10.zip
 sudo unzip maccms10.zip
 sudo chmod -R 777 /www

@@ -1,17 +1,5 @@
 #!/bin/bash
 
-# arguments: $RELEASE $LINUXFAMILY $BOARD $BUILD_DESKTOP
-#
-# This is the image customization script
-
-# NOTE: It is copied to /tmp directory inside the image
-# and executed there inside chroot environment
-# so don't reference any files that are not already installed
-
-# NOTE: If you want to transfer files between chroot and host
-# userpatches/overlay directory on host is bind-mounted to /tmp/overlay in chroot
-# The sd card's root path is accessible via $SDCARD variable.
-
 # 安装 Docker
 apt-get update
 curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
@@ -20,8 +8,6 @@ apt-get update
 apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 # 安装 squeezelite
 sudo apt-get install squeezelite -y
-# 安装解压软件 unzip
-sudo apt install unzip
 # 安装常用镜像
 sudo mkdir -p /home/docker
 sudo chmod -R 777 /home/docker

@@ -294,8 +294,6 @@ jobs:
           git clone -q --single-branch --depth=1 --branch=main https://github.com/armbian/build.git build
           ln -sf /builder/build ${GITHUB_WORKSPACE}/build
           ln -sf /builder/build /home/runner/work/_actions/ophub/amlogic-s9xxx-armbian/main/build
-          # 下载扩展的安装自定脚本
-          wget -P ./build/extensions https://github.com/hy5528/amlogic-s9xxx-armbian/blob/main/userpatches/extensions/customize-image.sh
           echo "status=success" >> ${GITHUB_OUTPUT}
 
       - name: Compile Armbian [ ${{ inputs.set_release }} ]

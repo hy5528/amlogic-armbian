@@ -1,10 +1,8 @@
-#!/bin/bash
 
-# 安装 Docker
 curl -fsSL https://get.docker.com -o get-docker.sh
-# 安装 squeezelite
+
 sudo apt-get install squeezelite -y
-# 安装常用镜像
+
 sudo mkdir /home/docker
 sudo chmod -R 777 /home/docker
 sudo mkdir /www 
@@ -21,6 +19,6 @@ docker run -d --name=kms --restart=always -p 1688:1688 -p 1689:80   johngong/kms
 docker run -d --name=xteve --restart=always -p 34400:34400 --log-opt max-size=10m --log-opt max-file=5 -e TZ="Asia/Shanghai" -v /home/docker/xteve:/etc/xteve senexcrenshaw/xteve
 docker run -d --name music --restart=always -v /home/docker/music/cache:/var/www/html/cache -v /home/docker/music/temp:/var/www/html/temp -p 264:264 bloodstar/music-player
 docker run -d --name navidrome --restart=always --user $(id -u):$(id -g) -v /media:/music -v /home/docker/navidrome/data:/data -p 4533:4533 -e ND_LOGLEVEL=info deluan/navidrome:latest
-# 清理缓存
+
 apt autoremove -y && apt autoclean && apt remove -y && apt clean
 

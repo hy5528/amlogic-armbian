@@ -1,7 +1,7 @@
 ## 安装及升级 Armbian 的相关说明
 
 选择和你的盒子型号对应的 Armbian 系统，不同设备的使用方法查看对应的说明。
-
+编译时加入docker 
 - ### 安装 Armbian 到 EMMC
 
 1. `Rockchip` 平台的安装方法请查看说明文档中的 [第 8 章节](documents/README.cn.md#8-安装-armbian-到-emmc)。

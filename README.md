@@ -1,6 +1,6 @@
 ## 自用的一些盒子系统。
 
-Armbian_22.11.0-trunk_Aml-s805_jammy_5.9.0和Armbian_24.03_Aml-s812_jammy_5.9.0为玩客云5.9内核系统。
+Armbian_24.03_Aml-s812_jammy_5.9.0为玩客云5.9内核系统。
 
 带burn的为线刷包,默认用户: root, 默认密码: 1234。
 

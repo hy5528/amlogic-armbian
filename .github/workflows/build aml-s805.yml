@@ -22,13 +22,6 @@ jobs:
       - name: Checkout armbian/build
         run: |
           git clone --depth=1 --branch=master https://github.com/hy5528/s805-armbian-build
-
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          repository: ${{ env.ARMBIAN_REPO }}
-          ref: ${{ env.ARMBIAN_SHA }}
-
       
       - name: Build
         run: |

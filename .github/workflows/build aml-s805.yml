@@ -25,6 +25,7 @@ jobs:
       
       - name: Build
         run: |
+          cd s805-armbian-build
           # Don't update remote cache
           export GITHUB_ACTIONS=false
           sudo --preserve-env ./compile.sh BOARD=aml-s805 BRANCH=current RELEASE=jammy BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img DOWNLOAD_MIRROR=china MAINLINE_MIRROR=tuna EXTRAWIFI=no

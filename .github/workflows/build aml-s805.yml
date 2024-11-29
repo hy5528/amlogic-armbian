@@ -41,7 +41,7 @@ jobs:
       - name: Download and unpack the latest u-boot
         run: |
           echo "::group::Download"
-          curl -L -o ./uboot.img https://github.com/${UBOOT_REPO}/releases/download/${UBOOT_TAG}/${UBOOT_BURNIMG}
+          curl -L -o ./uboot.img https://github.com/hzyitc/u-boot-onecloud/releases/download/build-20221028-0940/eMMC.burn.img
           echo "::endgroup::"
 
           echo "::group::Unpack"

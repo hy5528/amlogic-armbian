@@ -50,7 +50,7 @@ jobs:
 
       - name: Extract boot and rootfs partitions
         run: |
-          diskimg=$(ls output/images/*.img)
+          diskimg=$(ls s805-armbian-build/output/images/*.img)
           loop=$(sudo losetup --find --show --partscan $diskimg)
           sudo img2simg ${loop}p1 burn/boot.simg
           sudo img2simg ${loop}p2 burn/rootfs.simg
@@ -69,13 +69,13 @@ jobs:
           VERIFY:rootfs:normal:rootfs.VERIFY
           EOF
 
-          prefix=$(ls output/images/*.img | sed 's/\.img$//')
+          prefix=$(ls s805-armbian-build/output/images/*.img | sed 's/\.img$//')
           burnimg=${prefix}.burn.img
           ./AmlImg pack $burnimg burn/
 
       - name: Hash and compress images
         run: |
-          for f in output/images/*.img; do
+          for f in s805-armbian-build/output/images/*.img; do
             sha256sum "$f" | tee -a sha256sum
             xz --threads=0 --compress "$f"
           done
@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.RELEASE }}-${{ matrix.BRANCH }}-${{ matrix.TYPE == 'desktop' && matrix.DESKTOP_ENVIRONMENT || matrix.TYPE }}
-          path: output/images/*
+          path: s805-armbian-build/output/images/*
 
       - name: Generate release informations
         run: |
@@ -99,4 +99,4 @@ jobs:
           append_body: true
           body_path: Release.md
           files: |
-            output/images/*
+            s805-armbian-build/output/images/*

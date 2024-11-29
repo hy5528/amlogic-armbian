@@ -11,9 +11,7 @@ jobs:
 
       
     steps:
-      - name: Import env
-        run: |
-          echo "$(echo "${{ needs.prepare.outputs.env }}" | base64 -d)" >>$GITHUB_ENV
+
       - name: Checkout armbian/build
         run: |
           git clone --depth=1 --branch=master https://github.com/hy5528/s805-armbian-build

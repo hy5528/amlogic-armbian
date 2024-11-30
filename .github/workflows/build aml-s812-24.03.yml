@@ -1,4 +1,4 @@
-name: build aml-s812
+name: build aml-s812-24.03
 
 on:
   push:

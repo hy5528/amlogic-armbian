@@ -50,7 +50,7 @@ jobs:
 
       - name: Extract boot and rootfs partitions
         run: |
-          diskimg=$(ls Build-Armbian/output/images/*.img)
+          diskimg=$(ls armbian-build-s805/output/images/*.img)
           loop=$(sudo losetup --find --show --partscan $diskimg)
           sudo img2simg ${loop}p1 burn/boot.simg
           sudo img2simg ${loop}p2 burn/rootfs.simg
@@ -69,13 +69,13 @@ jobs:
           VERIFY:rootfs:normal:rootfs.VERIFY
           EOF
 
-          prefix=$(ls Build-Armbian/output/images/*.img | sed 's/\.img$//')
+          prefix=$(ls armbian-build-s805/output/images/*.img | sed 's/\.img$//')
           burnimg=${prefix}.burn.img
           ./AmlImg pack $burnimg burn/
 
       - name: Hash and compress images
         run: |
-          for f in Build-Armbian/output/images/*.img; do
+          for f in armbian-build-s805/output/images/*.img; do
             sha256sum "$f" | tee -a sha256sum
             xz --threads=0 --compress "$f"
           done
@@ -84,7 +84,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ${{ matrix.RELEASE }}-${{ matrix.BRANCH }}-${{ matrix.TYPE == 'desktop' && matrix.DESKTOP_ENVIRONMENT || matrix.TYPE }}
-          path: Build-Armbian/output/images/*
+          path: armbian-build-s805/output/images/*
 
       - name: Generate release informations
         run: |
@@ -95,8 +95,8 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: Armbian_24.03_Aml-s812_jammy_5.9.0-1
+          tag_name: Armbian_22.08.0-trunk_Aml-s812_jammy_5.9.0
           append_body: true
           body_path: Release.md
           files: |
-            Build-Armbian/output/images/*
+            armbian-build-s805/output/images/*

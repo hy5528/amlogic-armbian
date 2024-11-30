@@ -1,4 +1,4 @@
-name: build aml-s805
+name: build aml-s812-22.11
 
 on:
   push:
@@ -95,7 +95,7 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: Armbian_22.11.0-trunk_Aml-s805_jammy_5.9.0
+          tag_name: Armbian_22.11.0-trunk_Aml-s812_jammy_5.9.0
           append_body: true
           body_path: Release.md
           files: |

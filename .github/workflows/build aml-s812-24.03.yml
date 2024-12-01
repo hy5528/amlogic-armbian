@@ -83,7 +83,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.RELEASE }}-${{ matrix.BRANCH }}-${{ matrix.TYPE == 'desktop' && matrix.DESKTOP_ENVIRONMENT || matrix.TYPE }}
+          name: Armbian_24.03_Aml-s812_jammy
           path: Build-Armbian/output/images/*
 
       - name: Generate release informations

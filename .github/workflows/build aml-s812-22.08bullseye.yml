@@ -21,7 +21,7 @@ jobs:
           remove-android: 'true'
       - name: Checkout armbian/build
         run: |
-          git clone --depth=1 --branch=Homeassistant-H6 https://github.com/pappicio/Homeassistant-H6
+          git clone --depth=1 --branch=Armbian-H6 https://github.com/pappicio/Homeassistant-H6
       
       - name: Build
         run: |

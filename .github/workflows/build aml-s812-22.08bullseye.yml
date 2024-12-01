@@ -21,13 +21,13 @@ jobs:
           remove-android: 'true'
       - name: Checkout armbian/build
         run: |
-          git clone --depth=1 --branch=master https://github.com/hy5528/armbian-build-s805
+          git clone --depth=1 --branch=Homeassistant-H6 https://github.com/pappicio/Homeassistant-H6
       
       - name: Build
         run: |
-          cd armbian-build-s805
+          cd Homeassistant-H6
           # Don't update remote cache
-          sudo ./compile.sh BOARD=aml-s812 BRANCH=current RELEASE=bullseye BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img DOWNLOAD_MIRROR=china MAINLINE_MIRROR=tuna EXTRAWIFI=no
+          sudo ./compile.sh BOARD=onecloud BRANCH=current RELEASE=bullseye BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img DOWNLOAD_MIRROR=china MAINLINE_MIRROR=tuna EXTRAWIFI=no
           sudo chown $(id -u):$(id -g) -R output/
 
       - name: Install Dependents

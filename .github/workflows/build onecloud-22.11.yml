@@ -1,4 +1,4 @@
-name: build aml-s812-22.08
+name: build onecloud-22.11
 
 on:
   push:

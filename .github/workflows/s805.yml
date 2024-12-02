@@ -14,8 +14,8 @@ env:
   UBOOT_REPO: hzyitc/u-boot-onecloud
   UBOOT_RELEASE: latest
   UBOOT_BURNIMG: eMMC.burn.img
-  ARMBIAN_REPO: pappicio/Homeassistant-H6
-  ARMBIAN_REF: Armbian-H6
+  ARMBIAN_REPO: hy5528/armbian-build-s805
+  ARMBIAN_REF: master
   PATCHES_DISABLED: 5082
 
 permissions:

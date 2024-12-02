@@ -1,4 +1,4 @@
-name: build onecloud-22.0.9
+name: build onecloud-22.0.8
 
 on:
   push:

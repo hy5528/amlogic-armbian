@@ -16,7 +16,6 @@ env:
   UBOOT_BURNIMG: eMMC.burn.img
   ARMBIAN_REPO: pappicio/Homeassistant-H6
   ARMBIAN_REF: Armbian-H6
-  PATCHES: 4077,5076
   PATCHES_DISABLED: 5082
 
 permissions:

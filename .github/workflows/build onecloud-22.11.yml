@@ -28,11 +28,11 @@ jobs:
           
       - name: Checkout armbian/build
         run: |
-          git clone --depth=1 --branch=master https://github.com/hy5528/armbian-build-s805
+          git clone --depth=1 --branch=main https://github.com/hy5528/build
       
       - name: Build
         run: |
-          cd armbian-build-s805
+          cd build
           # Don't update remote cache
           sudo ./compile.sh BOARD=aml-s812 BRANCH=current RELEASE=jammy BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img DOWNLOAD_MIRROR=china MAINLINE_MIRROR=tuna EXTRAWIFI=no
           sudo chown $(id -u):$(id -g) -R output/
@@ -57,7 +57,7 @@ jobs:
 
       - name: Extract boot and rootfs partitions
         run: |
-          diskimg=$(ls armbian-build-s805/output/images/*.img)
+          diskimg=$(ls build/output/images/*.img)
           loop=$(sudo losetup --find --show --partscan $diskimg)
           sudo img2simg ${loop}p1 burn/boot.simg
           sudo img2simg ${loop}p2 burn/rootfs.simg
@@ -76,13 +76,13 @@ jobs:
           VERIFY:rootfs:normal:rootfs.VERIFY
           EOF
 
-          prefix=$(ls armbian-build-s805/output/images/*.img | sed 's/\.img$//')
+          prefix=$(ls build/output/images/*.img | sed 's/\.img$//')
           burnimg=${prefix}.burn.img
           ./AmlImg pack $burnimg burn/
 
       - name: Hash and compress images
         run: |
-          for f in armbian-build-s805/output/images/*.img; do
+          for f in build/output/images/*.img; do
             sha256sum "$f" | tee -a sha256sum
             xz --threads=0 --compress "$f"
           done
@@ -91,7 +91,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Armbian_22.11.0-trunk_Onecloud_jammy
-          path: armbian-build-s805/output/images/*
+          path: build/output/images/*
 
       - name: Generate release informations
         run: |
@@ -106,4 +106,4 @@ jobs:
           append_body: true
           body_path: Release.md
           files: |
-            armbian-build-s805/output/images/*
+            build/output/images/*

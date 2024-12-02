@@ -5,7 +5,7 @@ jammy为玩客云5.9内核系统。
 
 其它为s905l3a系列系统。
 
-均编译好了docker。
+集成docker。
 
 
 ## s905l3a系列安装及升级 Armbian 的相关说明

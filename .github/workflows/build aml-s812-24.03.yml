@@ -33,7 +33,7 @@ jobs:
         run: |
           cd Build-Armbian
           # Don't update remote cache
-          sudo ./compile.sh BOARD=aml-s812 BRANCH=currentRELEASE=jammy BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img DOWNLOAD_MIRROR=china MAINLINE_MIRROR=tuna EXTRAWIFI=no
+          sudo ./compile.sh BOARD=onecloud BRANCH=currentRELEASE=jammy BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img DOWNLOAD_MIRROR=china MAINLINE_MIRROR=tuna EXTRAWIFI=no
           sudo chown $(id -u):$(id -g) -R output/
 
       - name: Install Dependents
@@ -95,13 +95,14 @@ jobs:
       - name: Generate release informations
         run: |
           cat <<EOF | sed -E 's/^  //' | tee Release.md
+          echo "build_tag=Armbian_${{ inputs.set_release }}_${{ inputs.armbian_storage }}_$(date +"%Y.%m")" >> ${GITHUB_OUTPUT}
             $(cat sha256sum | awk '{printf "%s: `%s`\n", $2, $1}')
           EOF
 
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: Armbian_24.03_Aml-s812_jammy_5.9.0
+          tag_name: ${{ steps.clean.outputs.build_tag }}
           append_body: true
           body_path: Release.md
           files: |

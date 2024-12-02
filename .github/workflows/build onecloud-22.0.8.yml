@@ -11,6 +11,20 @@ jobs:
 
       
     steps:
+      - id: get
+        name: Get repositories information
+        run: |
+          TIME="$(curl https://api.github.com/repos/${SCRIPT_REPO}/actions/runs/${GITHUB_RUN_ID} | jq -r .created_at)"
+          TAG="ci-$(date -d "${TIME}" -u +'%Y%m%d-%H%M%S-%Z')
+
+          cat <<EOF | sed -E 's/^  //' >>$GITHUB_ENV
+            TIME=$TIME
+            TAG=$TAG
+            SCRIPT_SHA=$SCRIPT_SHA
+            ARMBIAN_SHA=$ARMBIAN_SHA
+          EOF
+          echo "env=$(cat $GITHUB_ENV | base64 -w 0)" >>$GITHUB_OUTPUT
+          
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
@@ -102,7 +116,7 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: Armbian_22.0.8-trunk_Onecloud_jammy_5.9.0
+          tag_name: ${{ env.TAG }}
           append_body: true
           body_path: Release.md
           files: |

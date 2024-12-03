@@ -1,4 +1,4 @@
-name: build onecloud-22
+name: build onecloud
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
           
       - name: Checkout armbian/build
         run: |
-          git clone --depth=1 --branch=master https://github.com/hy5528/armbian-build-s805
+          git clone --depth=1 --branch=main https://github.com/hy5528/armbian-build-s805
       
       - name: Build
         run: |
@@ -95,7 +95,7 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: Armbian_22-trunk_Onecloud_jammy_5.9
+          tag_name: Armbian_Onecloud_jammy_5.9
           append_body: true
           body_path: Release.md
           files: |

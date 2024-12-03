@@ -70,11 +70,6 @@ jobs:
             sha256sum "$f" | tee -a sha256sum
             xz --threads=0 --compress "$f"
           done
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: Armbian_24.03_Aml-s812_jammy
-          path: Build-Armbian/output/images/*
 
       - name: Generate release informations
         run: |

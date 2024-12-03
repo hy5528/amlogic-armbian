@@ -78,6 +78,7 @@ jobs:
       - name: Hash and compress images
         run: |
           for f in armbian-build-s805/output/images/*.img; do
+            echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
             sha256sum "$f" | tee -a sha256sum
             xz --threads=0 --compress "$f"
           done
@@ -97,7 +98,7 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: Armbian_22.0.8-trunk_Onecloud_jammy_5.9
+          tag_name: Armbian_22.0.8-trunk_Onecloud_jammy_5.9-${{ steps.tag.outputs.release_tag }}
           append_body: true
           body_path: Release.md
           files: |

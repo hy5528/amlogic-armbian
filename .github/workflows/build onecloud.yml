@@ -21,6 +21,10 @@ jobs:
           remove-dotnet: 'true'
           remove-android: 'true'
 
+      - name: Install Dependents
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  EE727D4449467F0E
+          
       - name: Install keys
         run: |
           sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EE727D4449467F0E

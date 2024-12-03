@@ -78,7 +78,6 @@ jobs:
       - name: Hash and compress images
         run: |
           for f in armbian-build-s805/output/images/*.img; do
-            echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
             sha256sum "$f" | tee -a sha256sum
             xz --threads=0 --compress "$f"
           done

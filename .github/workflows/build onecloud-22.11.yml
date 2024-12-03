@@ -81,11 +81,6 @@ jobs:
             xz --threads=0 --compress "$f"
           done
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: Armbian_22.11.0-trunk_onecloud_jammy
-          path: s805-armbian-build/output/images/*
 
       - name: Generate release informations
         run: |

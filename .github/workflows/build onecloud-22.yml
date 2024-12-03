@@ -91,6 +91,7 @@ jobs:
       - name: Generate release informations
         run: |
           cat <<EOF | sed -E 's/^  //' | tee Release.md
+          echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
             $(cat sha256sum | awk '{printf "%s: `%s`\n", $2, $1}')
           EOF
 

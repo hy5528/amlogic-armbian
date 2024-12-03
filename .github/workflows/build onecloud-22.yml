@@ -89,7 +89,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: Armbian_22.0.8-trunk_Onecloud_jammy
+          name: Armbian_22-trunk_Onecloud_jammy
           path: armbian-build-s805/output/images/*
 
       - name: Generate release informations
@@ -102,7 +102,7 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: Armbian_22.0.8-trunk_Onecloud_jammy_5.9-${{ steps.tag.outputs.release_tag }}
+          tag_name: Armbian_22-trunk_Onecloud_jammy_5.9-${{ steps.tag.outputs.release_tag }}
           append_body: true
           body_path: Release.md
           files: |

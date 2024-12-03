@@ -19,7 +19,7 @@ jobs:
           swap-size-mb: 2266
           remove-dotnet: 'true'
           remove-android: 'true'
-      - name: Install Dependents
+      - name: Install key 
         run: |
           sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  EE727D4449467F0E
           

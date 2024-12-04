@@ -1,0 +1,106 @@
+name: build onecloud-noble
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+      
+    steps:
+  
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          # 这个值是保留给系统的空间大小，之前设置太小，总会在安装依赖或者编译过程中报设备空间不足的错误而导致编译失败
+          root-reserve-mb: 8096
+          swap-size-mb: 2266
+          remove-dotnet: 'true'
+          remove-android: 'true'
+
+      - name: Install key 
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  EE727D4449467F0E
+          
+      - name: Install keys
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EE727D4449467F0E
+          
+      - name: Checkout armbian/build
+        run: |
+           git clone --depth=1 --branch=main https://github.com/hy5528/build
+      
+      - name: Build
+        run: |
+          cd build
+          # Don't update remote cache
+          sudo ./compile.sh BOARD=onecloud BRANCH=current RELEASE=noble BUILD_MINIMAL=yes BUILD_DESKTOP=no KERNEL_ONLY=no KERNEL_CONFIGURE=no COMPRESS_OUTPUTIMAGE=sha,gpg,img DOWNLOAD_MIRROR=china MAINLINE_MIRROR=tuna EXTRAWIFI=no
+          sudo chown $(id -u):$(id -g) -R output/
+
+      - name: Install Dependents
+        run: |
+          sudo apt install img2simg
+
+          ver="v0.3.1"
+          curl -L -o ./AmlImg https://github.com/hzyitc/AmlImg/releases/download/v0.3.1/AmlImg_v0.3.1_linux_amd64
+          chmod +x ./AmlImg
+
+      - name: Download and unpack the latest u-boot
+        run: |
+          echo "::group::Download"
+          curl -L -o ./uboot.img https://github.com/hzyitc/u-boot-onecloud/releases/download/build-20221028-0940/eMMC.burn.img
+          echo "::endgroup::"
+
+          echo "::group::Unpack"
+          ./AmlImg unpack ./uboot.img burn/
+          echo "::endgroup::"
+
+      - name: Extract boot and rootfs partitions
+        run: |
+          diskimg=$(ls build/output/images/*.img)
+          loop=$(sudo losetup --find --show --partscan $diskimg)
+          sudo img2simg ${loop}p1 burn/boot.simg
+          sudo img2simg ${loop}p2 burn/rootfs.simg
+          sudo losetup -d $loop
+          sudo chown $(id -u):$(id -g) -R burn/
+
+      - name: Generate burn image
+        run: |
+          echo -n "sha1sum $(sha1sum burn/boot.simg | awk '{print $1}')" >burn/boot.VERIFY
+          echo -n "sha1sum $(sha1sum burn/rootfs.simg | awk '{print $1}')" >burn/rootfs.VERIFY
+
+          cat <<EOF >>burn/commands.txt
+          PARTITION:boot:sparse:boot.simg
+          VERIFY:boot:normal:boot.VERIFY
+          PARTITION:rootfs:sparse:rootfs.simg
+          VERIFY:rootfs:normal:rootfs.VERIFY
+          EOF
+
+          prefix=$(ls build/output/images/*.img | sed 's/\.img$//')
+          burnimg=${prefix}.burn.img
+          ./AmlImg pack $burnimg burn/
+
+      - name: Hash and compress images
+        run: |
+          for f in build/output/images/*.img; do
+            sha256sum "$f" | tee -a sha256sum
+            xz --threads=0 --compress "$f"
+          done
+
+      - name: Generate release informations
+        run: |
+          cat <<EOF | sed -E 's/^  //' | tee Release.md
+            $(cat sha256sum | awk '{printf "%s: `%s`\n", $2, $1}')
+          EOF
+
+      - name: Upload to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: Armbian_24.11.0-trunk_Onecloud_jammy_5.9.0
+          append_body: true
+          body_path: Release.md
+          files: |
+            build/output/images/*

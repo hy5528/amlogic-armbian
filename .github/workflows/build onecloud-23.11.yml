@@ -24,8 +24,7 @@ jobs:
       - name: Install key 
         run: |
           sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  EE727D4449467F0E
-
-          
+    
       - name: Checkout armbian/build
         run: |
            git clone --depth=1 --branch=v23.11 https://github.com/hy5528/Build-Armbian-OneCloud

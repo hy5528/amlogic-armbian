@@ -24,10 +24,7 @@ jobs:
       - name: Install key 
         run: |
           sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys  EE727D4449467F0E
-          
-      - name: Install keys
-        run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EE727D4449467F0E
+
           
       - name: Checkout armbian/build
         run: |

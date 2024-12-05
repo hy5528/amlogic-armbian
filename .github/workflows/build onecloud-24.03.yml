@@ -84,7 +84,7 @@ jobs:
       - name: Upload to release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: Armbian_24.03_onecloud_jammy_5.9.0
+          tag_name: Armbian_Onecloud_jammy_5.9.0
           append_body: true
           body_path: Release.md
           files: |

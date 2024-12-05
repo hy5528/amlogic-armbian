@@ -1,4 +1,4 @@
-name: build onecloud-22.11
+name: build onecloud-24.05
 
 on:
   push:
@@ -27,7 +27,7 @@ jobs:
     
       - name: Checkout armbian/build
         run: |
-           git clone --depth=1 --branch=v22.11 https://github.com/hy5528/Build-Armbian-OneCloud
+           git clone --depth=1 --branch=v24.05 https://github.com/hy5528/Build-Armbian-OneCloud
       
       - name: Build
         run: |

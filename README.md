@@ -10,7 +10,7 @@
 
 选择和你的盒子型号对应的 Armbian 系统，不同设备的使用方法查看对应的说明。
 
-编译时加入docker。MINIMAL=yes
+编译时加入docker。MINIMAL版。
 
 - ### 安装 Armbian 到 EMMC
 
